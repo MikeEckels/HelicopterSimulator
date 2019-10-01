@@ -104,17 +104,17 @@ void loop() {
       Serial.print(cyclic.Y);
       Serial.print(",");
       Serial.print(cyclic.Z);
-      Serial.print("\t");
+      Serial.print("    ");
       Serial.print(collThrottle.Z);
-      Serial.print("\t");
+      Serial.print("    ");
       Serial.print(collThrottle.Y);
-      Serial.print("\t");
+      Serial.print("    ");
       Serial.print(yaw.X);
     }else{
       Serial.print(cyclic.ToString());
-      Serial.print("\t");
+      Serial.print("    ");
       Serial.print(collThrottle.ToString());
-      Serial.print("\t");
+      Serial.print("    ");
       Serial.print(yaw.ToString());
     }
   }else {
@@ -129,6 +129,6 @@ void loop() {
 
   if (timePrint) {
     Serial.print(micros() - timeMicros);
-    Serial.print("\t");
+    Serial.print("    ");
   }
 }
