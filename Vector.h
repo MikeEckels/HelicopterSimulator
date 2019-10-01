@@ -13,7 +13,8 @@ public:
 	Vector3D(double x, double y, double z);
 	Vector3D Absolute();
 	Vector3D Normal();
-	Vector3D Add(Vector3D vector);
+  Vector3D Add(Vector3D vector);
+	Vector3D Add(double scalar);
 	Vector3D Subtract(Vector3D vector);
 	Vector3D Multiply(Vector3D vector);
 	Vector3D Divide(Vector3D vector);

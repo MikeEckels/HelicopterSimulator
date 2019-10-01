@@ -437,6 +437,8 @@ class MPU6050 {
     public:
         MPU6050(uint8_t address=MPU6050_DEFAULT_ADDRESS);
 
+        void setMPUAddress(uint8_t address=MPU6050_DEFAULT_ADDRESS);
+
         void initialize();
         bool testConnection();
 
@@ -820,6 +822,14 @@ class MPU6050 {
         uint8_t getDMPConfig2();
         void setDMPConfig2(uint8_t config);
 
+		// Calibration Routines
+		void CalibrateGyro(uint8_t Loops = 15); // Fine tune after setting offsets with less Loops.
+		void CalibrateAccel(uint8_t Loops = 15);// Fine tune after setting offsets with less Loops.
+		void PID(uint8_t ReadAddress, float kP,float kI, uint8_t Loops);  // Does the math
+		void PrintActiveOffsets(); // See the results of the Calibration
+
+
+
         // special methods for MotionApps 2.0 implementation
         #ifdef MPU6050_INCLUDE_DMP_MOTIONAPPS20
 
@@ -857,13 +867,13 @@ class MPU6050 {
             uint8_t dmpGetAccel(VectorInt16 *v, const uint8_t* packet=0);
             uint8_t dmpGetQuaternion(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetQuaternion(int16_t *data, const uint8_t* packet=0);
-            uint8_t dmpGetQuaternion(HQuat *q, const uint8_t* packet=0);
+            uint8_t dmpGetQuaternion(Quaternion *q, const uint8_t* packet=0);
             uint8_t dmpGet6AxisQuaternion(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGet6AxisQuaternion(int16_t *data, const uint8_t* packet=0);
-            uint8_t dmpGet6AxisQuaternion(HQuat *q, const uint8_t* packet=0);
+            uint8_t dmpGet6AxisQuaternion(Quaternion *q, const uint8_t* packet=0);
             uint8_t dmpGetRelativeQuaternion(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetRelativeQuaternion(int16_t *data, const uint8_t* packet=0);
-            uint8_t dmpGetRelativeQuaternion(HQuat *data, const uint8_t* packet=0);
+            uint8_t dmpGetRelativeQuaternion(Quaternion *data, const uint8_t* packet=0);
             uint8_t dmpGetGyro(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetGyro(int16_t *data, const uint8_t* packet=0);
             uint8_t dmpGetGyro(VectorInt16 *v, const uint8_t* packet=0);
@@ -875,7 +885,7 @@ class MPU6050 {
             uint8_t dmpGetLinearAccelInWorld(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetLinearAccelInWorld(int16_t *data, const uint8_t* packet=0);
             uint8_t dmpGetLinearAccelInWorld(VectorInt16 *v, const uint8_t* packet=0);
-            uint8_t dmpGetLinearAccelInWorld(VectorInt16 *v, VectorInt16 *vReal, HQuat *q);
+            uint8_t dmpGetLinearAccelInWorld(VectorInt16 *v, VectorInt16 *vReal, Quaternion *q);
             uint8_t dmpGetGyroAndAccelSensor(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetGyroAndAccelSensor(int16_t *data, const uint8_t* packet=0);
             uint8_t dmpGetGyroAndAccelSensor(VectorInt16 *g, VectorInt16 *a, const uint8_t* packet=0);
@@ -887,7 +897,7 @@ class MPU6050 {
             uint8_t dmpGetGravity(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetGravity(int16_t *data, const uint8_t* packet=0);
             uint8_t dmpGetGravity(VectorInt16 *v, const uint8_t* packet=0);
-            uint8_t dmpGetGravity(VectorFloat *v, HQuat *q);
+            uint8_t dmpGetGravity(VectorFloat *v, Quaternion *q);
             uint8_t dmpGetUnquantizedAccel(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetUnquantizedAccel(int16_t *data, const uint8_t* packet=0);
             uint8_t dmpGetUnquantizedAccel(VectorInt16 *v, const uint8_t* packet=0);
@@ -897,8 +907,8 @@ class MPU6050 {
             uint8_t dmpGetExternalSensorData(int32_t *data, uint16_t size, const uint8_t* packet=0);
             uint8_t dmpGetEIS(int32_t *data, const uint8_t* packet=0);
             
-            uint8_t dmpGetEuler(float *data, HQuat *q);
-            uint8_t dmpGetYawPitchRoll(float *data, HQuat *q, VectorFloat *gravity);
+            uint8_t dmpGetEuler(float *data, Quaternion *q);
+            uint8_t dmpGetYawPitchRoll(float *data, Quaternion *q, VectorFloat *gravity);
 
             // Get Floating Point data from FIFO
             uint8_t dmpGetAccelFloat(float *data, const uint8_t* packet=0);
@@ -915,7 +925,7 @@ class MPU6050 {
             uint8_t dmpDecodeQuantizedAccel();
             uint32_t dmpGetGyroSumOfSquare();
             uint32_t dmpGetAccelSumOfSquare();
-            void dmpOverrideHQuat(long *q);
+            void dmpOverrideQuaternion(long *q);
             uint16_t dmpGetFIFOPacketSize();
         #endif
 
@@ -956,13 +966,13 @@ class MPU6050 {
             uint8_t dmpGetAccel(VectorInt16 *v, const uint8_t* packet=0);
             uint8_t dmpGetQuaternion(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetQuaternion(int16_t *data, const uint8_t* packet=0);
-            uint8_t dmpGetQuaternion(HQuat *q, const uint8_t* packet=0);
+            uint8_t dmpGetQuaternion(Quaternion *q, const uint8_t* packet=0);
             uint8_t dmpGet6AxisQuaternion(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGet6AxisQuaternion(int16_t *data, const uint8_t* packet=0);
-            uint8_t dmpGet6AxisQuaternion(HQuat *q, const uint8_t* packet=0);
+            uint8_t dmpGet6AxisQuaternion(Quaternion *q, const uint8_t* packet=0);
             uint8_t dmpGetRelativeQuaternion(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetRelativeQuaternion(int16_t *data, const uint8_t* packet=0);
-            uint8_t dmpGetRelativeQuaternion(HQuat *data, const uint8_t* packet=0);
+            uint8_t dmpGetRelativeQuaternion(Quaternion *data, const uint8_t* packet=0);
             uint8_t dmpGetGyro(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetGyro(int16_t *data, const uint8_t* packet=0);
             uint8_t dmpGetGyro(VectorInt16 *v, const uint8_t* packet=0);
@@ -975,7 +985,7 @@ class MPU6050 {
             uint8_t dmpGetLinearAccelInWorld(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetLinearAccelInWorld(int16_t *data, const uint8_t* packet=0);
             uint8_t dmpGetLinearAccelInWorld(VectorInt16 *v, const uint8_t* packet=0);
-            uint8_t dmpGetLinearAccelInWorld(VectorInt16 *v, VectorInt16 *vReal, HQuat *q);
+            uint8_t dmpGetLinearAccelInWorld(VectorInt16 *v, VectorInt16 *vReal, Quaternion *q);
             uint8_t dmpGetGyroAndAccelSensor(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetGyroAndAccelSensor(int16_t *data, const uint8_t* packet=0);
             uint8_t dmpGetGyroAndAccelSensor(VectorInt16 *g, VectorInt16 *a, const uint8_t* packet=0);
@@ -987,7 +997,7 @@ class MPU6050 {
             uint8_t dmpGetGravity(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetGravity(int16_t *data, const uint8_t* packet=0);
             uint8_t dmpGetGravity(VectorInt16 *v, const uint8_t* packet=0);
-            uint8_t dmpGetGravity(VectorFloat *v, HQuat *q);
+            uint8_t dmpGetGravity(VectorFloat *v, Quaternion *q);
             uint8_t dmpGetUnquantizedAccel(int32_t *data, const uint8_t* packet=0);
             uint8_t dmpGetUnquantizedAccel(int16_t *data, const uint8_t* packet=0);
             uint8_t dmpGetUnquantizedAccel(VectorInt16 *v, const uint8_t* packet=0);
@@ -997,8 +1007,8 @@ class MPU6050 {
             uint8_t dmpGetExternalSensorData(int32_t *data, uint16_t size, const uint8_t* packet=0);
             uint8_t dmpGetEIS(int32_t *data, const uint8_t* packet=0);
             
-            uint8_t dmpGetEuler(float *data, HQuat *q);
-            uint8_t dmpGetYawPitchRoll(float *data, HQuat *q, VectorFloat *gravity);
+            uint8_t dmpGetEuler(float *data, Quaternion *q);
+            uint8_t dmpGetYawPitchRoll(float *data, Quaternion *q, VectorFloat *gravity);
 
             // Get Floating Point data from FIFO
             uint8_t dmpGetAccelFloat(float *data, const uint8_t* packet=0);

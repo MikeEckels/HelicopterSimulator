@@ -209,14 +209,14 @@ int8_t I2Cdev::readWord(uint8_t devAddr, uint8_t regAddr, uint16_t *data, uint16
  * @return Number of bytes read (-1 indicates failure)
  */
 int8_t I2Cdev::readBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t *data, uint16_t timeout) {
-    #ifdef I2CDEV_SERIAL_DEBUG
-        Serial.print("I2C (0x");
-        Serial.print(devAddr, HEX);
-        Serial.print(") reading ");
-        Serial.print(length, DEC);
-        Serial.print(" bytes from 0x");
-        Serial.print(regAddr, HEX);
-        Serial.print("...");
+    #ifdef I2CDEV_Serial1_DEBUG
+        Serial1.print("I2C (0x");
+        Serial1.print(devAddr, HEX);
+        Serial1.print(") reading ");
+        Serial1.print(length, DEC);
+        Serial1.print(" bytes from 0x");
+        Serial1.print(regAddr, HEX);
+        Serial1.print("...");
     #endif
 
     int8_t count = 0;
@@ -239,9 +239,9 @@ int8_t I2Cdev::readBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8
 
                 for (; Wire.available() && (timeout == 0 || millis() - t1 < timeout); count++) {
                     data[count] = Wire.receive();
-                    #ifdef I2CDEV_SERIAL_DEBUG
-                        Serial.print(data[count], HEX);
-                        if (count + 1 < length) Serial.print(" ");
+                    #ifdef I2CDEV_Serial1_DEBUG
+                        Serial1.print(data[count], HEX);
+                        if (count + 1 < length) Serial1.print(" ");
                     #endif
                 }
 
@@ -263,9 +263,9 @@ int8_t I2Cdev::readBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8
         
                 for (; Wire.available() && (timeout == 0 || millis() - t1 < timeout); count++) {
                     data[count] = Wire.read();
-                    #ifdef I2CDEV_SERIAL_DEBUG
-                        Serial.print(data[count], HEX);
-                        if (count + 1 < length) Serial.print(" ");
+                    #ifdef I2CDEV_Serial1_DEBUG
+                        Serial1.print(data[count], HEX);
+                        if (count + 1 < length) Serial1.print(" ");
                     #endif
                 }
         
@@ -287,9 +287,9 @@ int8_t I2Cdev::readBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8
         
                 for (; Wire.available() && (timeout == 0 || millis() - t1 < timeout); count++) {
                     data[count] = Wire.read();
-                    #ifdef I2CDEV_SERIAL_DEBUG
-                        Serial.print(data[count], HEX);
-                        if (count + 1 < length) Serial.print(" ");
+                    #ifdef I2CDEV_Serial1_DEBUG
+                        Serial1.print(data[count], HEX);
+                        if (count + 1 < length) Serial1.print(" ");
                     #endif
                 }
             }
@@ -311,10 +311,10 @@ int8_t I2Cdev::readBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8
     // check for timeout
     if (timeout > 0 && millis() - t1 >= timeout && count < length) count = -1; // timeout
 
-    #ifdef I2CDEV_SERIAL_DEBUG
-        Serial.print(". Done (");
-        Serial.print(count, DEC);
-        Serial.println(" read).");
+    #ifdef I2CDEV_Serial1_DEBUG
+        Serial1.print(". Done (");
+        Serial1.print(count, DEC);
+        Serial1.println(" read).");
     #endif
 
     return count;
@@ -329,14 +329,14 @@ int8_t I2Cdev::readBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8
  * @return Number of words read (-1 indicates failure)
  */
 int8_t I2Cdev::readWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16_t *data, uint16_t timeout) {
-    #ifdef I2CDEV_SERIAL_DEBUG
-        Serial.print("I2C (0x");
-        Serial.print(devAddr, HEX);
-        Serial.print(") reading ");
-        Serial.print(length, DEC);
-        Serial.print(" words from 0x");
-        Serial.print(regAddr, HEX);
-        Serial.print("...");
+    #ifdef I2CDEV_Serial1_DEBUG
+        Serial1.print("I2C (0x");
+        Serial1.print(devAddr, HEX);
+        Serial1.print(") reading ");
+        Serial1.print(length, DEC);
+        Serial1.print(" words from 0x");
+        Serial1.print(regAddr, HEX);
+        Serial1.print("...");
     #endif
 
     int8_t count = 0;
@@ -365,9 +365,9 @@ int8_t I2Cdev::readWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint1
                     } else {
                         // second byte is bits 7-0 (LSb=0)
                         data[count] |= Wire.receive();
-                        #ifdef I2CDEV_SERIAL_DEBUG
-                            Serial.print(data[count], HEX);
-                            if (count + 1 < length) Serial.print(" ");
+                        #ifdef I2CDEV_Serial1_DEBUG
+                            Serial1.print(data[count], HEX);
+                            if (count + 1 < length) Serial1.print(" ");
                         #endif
                         count++;
                     }
@@ -398,9 +398,9 @@ int8_t I2Cdev::readWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint1
                     } else {
                         // second byte is bits 7-0 (LSb=0)
                         data[count] |= Wire.read();
-                        #ifdef I2CDEV_SERIAL_DEBUG
-                            Serial.print(data[count], HEX);
-                            if (count + 1 < length) Serial.print(" ");
+                        #ifdef I2CDEV_Serial1_DEBUG
+                            Serial1.print(data[count], HEX);
+                            if (count + 1 < length) Serial1.print(" ");
                         #endif
                         count++;
                     }
@@ -431,9 +431,9 @@ int8_t I2Cdev::readWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint1
                     } else {
                         // second byte is bits 7-0 (LSb=0)
                         data[count] |= Wire.read();
-                        #ifdef I2CDEV_SERIAL_DEBUG
-                            Serial.print(data[count], HEX);
-                            if (count + 1 < length) Serial.print(" ");
+                        #ifdef I2CDEV_Serial1_DEBUG
+                            Serial1.print(data[count], HEX);
+                            if (count + 1 < length) Serial1.print(" ");
                         #endif
                         count++;
                     }
@@ -463,10 +463,10 @@ int8_t I2Cdev::readWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint1
 
     if (timeout > 0 && millis() - t1 >= timeout && count < length) count = -1; // timeout
 
-    #ifdef I2CDEV_SERIAL_DEBUG
-        Serial.print(". Done (");
-        Serial.print(count, DEC);
-        Serial.println(" read).");
+    #ifdef I2CDEV_Serial1_DEBUG
+        Serial1.print(". Done (");
+        Serial1.print(count, DEC);
+        Serial1.println(" read).");
     #endif
     
     return count;
@@ -586,14 +586,14 @@ bool I2Cdev::writeWord(uint8_t devAddr, uint8_t regAddr, uint16_t data) {
  * @return Status of operation (true = success)
  */
 bool I2Cdev::writeBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t* data) {
-    #ifdef I2CDEV_SERIAL_DEBUG
-        Serial.print("I2C (0x");
-        Serial.print(devAddr, HEX);
-        Serial.print(") writing ");
-        Serial.print(length, DEC);
-        Serial.print(" bytes to 0x");
-        Serial.print(regAddr, HEX);
-        Serial.print("...");
+    #ifdef I2CDEV_Serial1_DEBUG
+        Serial1.print("I2C (0x");
+        Serial1.print(devAddr, HEX);
+        Serial1.print(") writing ");
+        Serial1.print(length, DEC);
+        Serial1.print(" bytes to 0x");
+        Serial1.print(regAddr, HEX);
+        Serial1.print("...");
     #endif
     uint8_t status = 0;
     #if ((I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE && ARDUINO < 100) || I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_NBWIRE)
@@ -608,9 +608,9 @@ bool I2Cdev::writeBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_
         Fastwire::write(regAddr);
     #endif
     for (uint8_t i = 0; i < length; i++) {
-        #ifdef I2CDEV_SERIAL_DEBUG
-            Serial.print(data[i], HEX);
-            if (i + 1 < length) Serial.print(" ");
+        #ifdef I2CDEV_Serial1_DEBUG
+            Serial1.print(data[i], HEX);
+            if (i + 1 < length) Serial1.print(" ");
         #endif
         #if ((I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE && ARDUINO < 100) || I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_NBWIRE)
             Wire.send((uint8_t) data[i]);
@@ -630,8 +630,8 @@ bool I2Cdev::writeBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_
         Fastwire::stop();
         //status = Fastwire::endTransmission();
     #endif
-    #ifdef I2CDEV_SERIAL_DEBUG
-        Serial.println(". Done.");
+    #ifdef I2CDEV_Serial1_DEBUG
+        Serial1.println(". Done.");
     #endif
     return status == 0;
 }
@@ -644,14 +644,14 @@ bool I2Cdev::writeBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_
  * @return Status of operation (true = success)
  */
 bool I2Cdev::writeWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16_t* data) {
-    #ifdef I2CDEV_SERIAL_DEBUG
-        Serial.print("I2C (0x");
-        Serial.print(devAddr, HEX);
-        Serial.print(") writing ");
-        Serial.print(length, DEC);
-        Serial.print(" words to 0x");
-        Serial.print(regAddr, HEX);
-        Serial.print("...");
+    #ifdef I2CDEV_Serial1_DEBUG
+        Serial1.print("I2C (0x");
+        Serial1.print(devAddr, HEX);
+        Serial1.print(") writing ");
+        Serial1.print(length, DEC);
+        Serial1.print(" words to 0x");
+        Serial1.print(regAddr, HEX);
+        Serial1.print("...");
     #endif
     uint8_t status = 0;
     #if ((I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE && ARDUINO < 100) || I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_NBWIRE)
@@ -665,21 +665,21 @@ bool I2Cdev::writeWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16
         Fastwire::beginTransmission(devAddr);
         Fastwire::write(regAddr);
     #endif
-    for (uint8_t i = 0; i < length * 2; i++) {
-        #ifdef I2CDEV_SERIAL_DEBUG
-            Serial.print(data[i], HEX);
-            if (i + 1 < length) Serial.print(" ");
+    for (uint8_t i = 0; i < length; i++) { 
+        #ifdef I2CDEV_Serial1_DEBUG
+            Serial1.print(data[i], HEX);
+            if (i + 1 < length) Serial1.print(" ");
         #endif
         #if ((I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE && ARDUINO < 100) || I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_NBWIRE)
             Wire.send((uint8_t)(data[i] >> 8));     // send MSB
-            Wire.send((uint8_t)data[i++]);          // send LSB
+            Wire.send((uint8_t)data[i]);          // send LSB
 		#elif (I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE && ARDUINO >= 100 \
 			|| I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_SBWIRE && ARDUINO >= 100)
 			Wire.write((uint8_t)(data[i] >> 8));    // send MSB
-            Wire.write((uint8_t)data[i++]);         // send LSB
+            Wire.write((uint8_t)data[i]);         // send LSB
         #elif (I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE)
             Fastwire::write((uint8_t)(data[i] >> 8));       // send MSB
-            status = Fastwire::write((uint8_t)data[i++]);   // send LSB
+            status = Fastwire::write((uint8_t)data[i]);   // send LSB
             if (status != 0) break;
         #endif
     }
@@ -692,8 +692,8 @@ bool I2Cdev::writeWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16
         Fastwire::stop();
         //status = Fastwire::endTransmission();
     #endif
-    #ifdef I2CDEV_SERIAL_DEBUG
-        Serial.println(". Done.");
+    #ifdef I2CDEV_Serial1_DEBUG
+        Serial1.println(". Done.");
     #endif
     return status == 0;
 }
@@ -763,8 +763,8 @@ uint16_t I2Cdev::readTimeout = I2CDEV_DEFAULT_READ_TIMEOUT;
             twst = TWSR & 0xF8;
             if (twst != TW_START && twst != TW_REP_START) return 2;
 
-            //Serial.print(device, HEX);
-            //Serial.print(" ");
+            //Serial1.print(device, HEX);
+            //Serial1.print(" ");
             TWDR = device << 1; // send device address without read bit (1)
             TWCR = (1 << TWINT) | (1 << TWEN);
             if (!waitInt()) return 3;
@@ -784,8 +784,8 @@ uint16_t I2Cdev::readTimeout = I2CDEV_DEFAULT_READ_TIMEOUT;
             twst = TWSR & 0xF8;
             if (twst != TW_START && twst != TW_REP_START) return 2;
 
-            //Serial.print(device, HEX);
-            //Serial.print(" ");
+            //Serial1.print(device, HEX);
+            //Serial1.print(" ");
             TWDR = device & 0xFE; // send device address without read bit (1)
             TWCR = (1 << TWINT) | (1 << TWEN);
             if (!waitInt()) return 3;
@@ -793,8 +793,8 @@ uint16_t I2Cdev::readTimeout = I2CDEV_DEFAULT_READ_TIMEOUT;
         } while (twst == TW_MT_SLA_NACK && retry-- > 0);
         if (twst != TW_MT_SLA_ACK) return 4;
 
-        //Serial.print(address, HEX);
-        //Serial.print(" ");
+        //Serial1.print(address, HEX);
+        //Serial1.print(" ");
         TWDR = address; // send data to the previously addressed device
         TWCR = (1 << TWINT) | (1 << TWEN);
         if (!waitInt()) return 5;
@@ -802,22 +802,22 @@ uint16_t I2Cdev::readTimeout = I2CDEV_DEFAULT_READ_TIMEOUT;
         if (twst != TW_MT_DATA_ACK) return 6;
 
         for (byte i = 0; i < num; i++) {
-            //Serial.print(data[i], HEX);
-            //Serial.print(" ");
+            //Serial1.print(data[i], HEX);
+            //Serial1.print(" ");
             TWDR = data[i]; // send data to the previously addressed device
             TWCR = (1 << TWINT) | (1 << TWEN);
             if (!waitInt()) return 7;
             twst = TWSR & 0xF8;
             if (twst != TW_MT_DATA_ACK) return 8;
         }
-        //Serial.print("\n");
+        //Serial1.print("\n");
 
         return 0;
     }
 
     byte Fastwire::write(byte value) {
         byte twst;
-        //Serial.println(value, HEX);
+        //Serial1.println(value, HEX);
         TWDR = value; // send data
         TWCR = (1 << TWINT) | (1 << TWEN);
         if (!waitInt()) return 1;
@@ -836,8 +836,8 @@ uint16_t I2Cdev::readTimeout = I2CDEV_DEFAULT_READ_TIMEOUT;
             twst = TWSR & 0xF8;
             if (twst != TW_START && twst != TW_REP_START) return 17;
 
-            //Serial.print(device, HEX);
-            //Serial.print(" ");
+            //Serial1.print(device, HEX);
+            //Serial1.print(" ");
             TWDR = device & 0xfe; // send device address to write
             TWCR = (1 << TWINT) | (1 << TWEN);
             if (!waitInt()) return 18;
@@ -845,8 +845,8 @@ uint16_t I2Cdev::readTimeout = I2CDEV_DEFAULT_READ_TIMEOUT;
         } while (twst == TW_MT_SLA_NACK && retry-- > 0);
         if (twst != TW_MT_SLA_ACK) return 19;
 
-        //Serial.print(address, HEX);
-        //Serial.print(" ");
+        //Serial1.print(address, HEX);
+        //Serial1.print(" ");
         TWDR = address; // send data to the previously addressed device
         TWCR = (1 << TWINT) | (1 << TWEN);
         if (!waitInt()) return 20;
@@ -862,8 +862,8 @@ uint16_t I2Cdev::readTimeout = I2CDEV_DEFAULT_READ_TIMEOUT;
             twst = TWSR & 0xF8;
             if (twst != TW_START && twst != TW_REP_START) return 23;
 
-            //Serial.print(device, HEX);
-            //Serial.print(" ");
+            //Serial1.print(device, HEX);
+            //Serial1.print(" ");
             TWDR = device | 0x01; // send device address with the read bit (1)
             TWCR = (1 << TWINT) | (1 << TWEN);
             if (!waitInt()) return 24;
@@ -880,10 +880,10 @@ uint16_t I2Cdev::readTimeout = I2CDEV_DEFAULT_READ_TIMEOUT;
             twst = TWSR & 0xF8;
             if (twst != TW_MR_DATA_ACK && twst != TW_MR_DATA_NACK) return twst;
             data[i] = TWDR;
-            //Serial.print(data[i], HEX);
-            //Serial.print(" ");
+            //Serial1.print(data[i], HEX);
+            //Serial1.print(" ");
         }
-        //Serial.print("\n");
+        //Serial1.print("\n");
         stop();
 
         return 0;

@@ -1,16 +1,16 @@
 #include "Mathematics.h"
 
-double Mathematics::Constrain(double value, double minimum, double maximum) {
-	if (value > maximum)
+float Mathematics::Constrain(float v, float minimum, float maximum) {
+	if (v > maximum)
 	{
-		value = maximum;
+		v = maximum;
 	}
-	else if (value < minimum)
+	else if (v < minimum)
 	{
-		value = minimum;
+		v = minimum;
 	}
 
-	return value;
+	return v;
 }
 
 double Mathematics::DegreesToRadians(double degrees) {

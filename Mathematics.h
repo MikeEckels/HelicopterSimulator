@@ -9,7 +9,7 @@ public:
   static constexpr double DOUBLE_EPSILON = pow(2, -1022);
   static constexpr double DOUBLE_MAX = pow(2,1024)-pow(2,971);
 
-	static double Constrain(double value, double minimum, double maximum);
+	static float Constrain(float v, float minimum, float maximum);
 	static double DegreesToRadians(double degrees);
 	static double RadiansToDegrees(double radians);
 	static String DoubleToCleanString(double value);

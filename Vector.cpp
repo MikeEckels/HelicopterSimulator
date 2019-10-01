@@ -38,6 +38,14 @@ Vector3D Vector3D::Add(Vector3D vector) {
 	};
 }
 
+Vector3D Vector3D::Add(double scalar) {
+ return Vector3D{
+    this->X + scalar,
+    this->Y + scalar,
+    this->Z + scalar 
+  };
+}
+
 Vector3D Vector3D::Subtract(Vector3D vector) {
 	return Vector3D {
 		this->X - vector.X,

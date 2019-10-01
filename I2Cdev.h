@@ -71,9 +71,9 @@ THE SOFTWARE.
 #define I2CDEV_BUILTIN_SBWIRE	    5 // I2C object from Shuning (Steve) Bian's SBWire Library at https://github.com/freespace/SBWire 
 
 // -----------------------------------------------------------------------------
-// Arduino-style "Serial.print" debug constant (uncomment to enable)
+// Arduino-style "Serial1.print" debug constant (uncomment to enable)
 // -----------------------------------------------------------------------------
-//#define I2CDEV_SERIAL_DEBUG
+//#define I2CDEV_Serial1_DEBUG
 
 #ifdef ARDUINO
     #if ARDUINO < 100
@@ -82,7 +82,8 @@ THE SOFTWARE.
         #include "Arduino.h"
     #endif
     #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-        #include <Wire.h>
+        //#include <Wire.h>
+        #include "i2c_t3.h"
     #endif
     #if I2CDEV_IMPLEMENTATION == I2CDEV_I2CMASTER_LIBRARY
         #include <I2C.h>
